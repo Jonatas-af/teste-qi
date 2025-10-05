@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultado Bloqueado</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1>Resultado Disponível</h1>
+  <p>Para ver seu relatório completo (QI, percentil e análise), faça o pagamento de <strong>R$10,99</strong>.</p>
+  <a href="https://seulinkdoKiwify.com" class="btn">Pagar R$10,99</a>
+  <p>Após o pagamento, clique no botão abaixo para ver seu resultado:</p>
+  <button onclick="viewResult()">Ver Resultado</button>
+</div>
+
+<script>
+function viewResult(){
+  const result = localStorage.getItem('qi_result');
+  if(result){
+    window.location.href = "result.html";
+  } else {
+    alert("Resultado não encontrado.");
+  }
+}
+</script>
+</body>
+</html>
