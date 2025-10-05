@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seu Resultado de QI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1>Seu Relatório de QI</h1>
+  <div id="result"></div>
+</div>
+
+<script>
+const result = JSON.parse(localStorage.getItem('qi_result'));
+if(result){
+  document.getElementById('result').innerHTML = `
+    <p>QI: <strong>${result.iq}</strong></p>
+    <p>Raw Score: ${result.raw} / ${result.total}</p>
+    <p>Percentil aproximado: ${result.percentile}ª</p>
+    <h3>Pontos Fortes e Recomendações:</h3>
+    <ul>
+      <li>Exercícios de lógica e padrões.</li>
+      <li>Prática de matemática mental.</li>
+      <li>Jogos de estratégia e leitura crítica.</li>
+    </ul>
+  `;
+}else{
+  document.getElementById('result').innerHTML = "<p>Resultado não encontrado.</p>";
+}
+</script>
+</body>
+</html>
