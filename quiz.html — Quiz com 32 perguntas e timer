@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz de QI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1>Teste de QI — 32 perguntas</h1>
+  <div id="timer">Tempo restante: <span id="time">30:00</span></div>
+  <div id="quiz-root"></div>
+</div>
+
+<script>
+// Perguntas de exemplo (32 perguntas)
+const questions = [
+  {id:1,q:"Se todos os B são A e todos os C são B, então todos os C são A?",options:["Sim","Não","Só às vezes","Indeterminado"],answer:0},
+  {id:2,q:"Qual número completa a sequência: 2, 4, 8, 16, ?",options:["20","24","32","34"],answer:2},
+  {id:3,q:"Se hoje é terça-feira, que dia será daqui a 45 dias?",options:["Sábado","Quinta-feira","Segunda-feira","Quarta-feira"],answer:1},
+  // ... (adicione todas as 32 perguntas aqui)
+];
+
+// Timer
+const TOTAL_TIME = 30*60; 
+let remaining = TOTAL_TIME; 
+let interval;
+let answers = {};
+let current = 0;
+
+function formatTime(s){
+  const mm=Math.floor(s/60).toString().padStart(2,'0');
+  const ss=(s%60).toString().padStart(2,'0');
+  return mm+':'+ss;
+}
+
+function startTimer(){
+  interval = setInterval(()=>{
+    remaining--;
+    document.getElementById('time').textContent = formatTime(remaining);
+    if(remaining<=0){ clearInterval(interval); finish(); }
+  },1000);
+}
+
+// Render quiz
+function render(){
+  const root = document.getElementById('quiz-root');
+  const q = questions[current];
+  root.innerHTML = `<div class="qnum">Pergunta ${current+1}/${questions.length}</div>
+  <div class="qtext">${q.q}</div>
+  <div class="opts">${q.options.map((o,i)=>`<label><input type="radio" name="opt" value="${i}" ${answers[q.id]==i?'checked':''}/> ${o}</label>`).join('')}</div>
+  <div class="nav">
+  <button onclick="prev()">Anterior</button> 
+  <button onclick="next()">Próximo</button> 
+  <button onclick="finish()">Finalizar</button>
+  </div>`;
+  document.querySelectorAll('input[name="opt"]').forEach(el=>{
+    el.onchange = e=>{ answers[q.id]=parseInt(e.target.value); }
+  });
+}
+
+function prev(){ if(current>0) current--; render(); }
+function next(){ if(current<questions.length-1) current++; render(); }
+
+// Cálculo simples de QI
+function finish(){
+  clearInterval(interval);
+  let raw=0;
+  questions.forEach(q=>{ if(answers[q.id]===q.answer) raw++; });
+  const z = (raw - 16)/4; // média=16, sd=4
+  const iq = Math.round(100 + 15*z);
+  const percentile = Math.round(50 + 34*z); // aproximação
+  const result = {iq:iq, percentile:percentile, raw:raw, total:questions.length};
+  localStorage.setItem('qi_result', JSON.stringify(result));
+  window.location.href = "locked.html";
+}
+
+startTimer();
+render();
+</script>
+</body>
+</html>
