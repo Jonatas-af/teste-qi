@@ -1,0 +1,8 @@
+body{ font-family: Arial, Helvetica, sans-serif; background:#f3f6fb; color:#0b1220; }
+.container{ max-width:800px; margin:30px auto; background:white; padding:20px; border-radius:10px; box-shadow:0 6px 20px rgba(2,6,23,0.08); text-align:center; }
+h1{ margin-bottom:20px; color:#0b1220; }
+.btn{ display:inline-block; padding:12px 20px; background:linear-gradient(90deg,#0066ff,#00d4ff); color:white; border-radius:8px; text-decoration:none; font-weight:bold; margin:10px 0; }
+.qtext{ font-weight:600; margin:12px 0; }
+.opts label{ display:block; margin:6px 0; cursor:pointer; }
+.nav button{ padding:8px 12px; margin:5px; border:none; border-radius:5px; cursor:pointer; background:#0066ff; color:white; }
+#timer{ font-size:18px; margin-bottom:15px; font-weight:bold; color:#ff0000; }
